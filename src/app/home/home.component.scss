@@ -1,0 +1,26 @@
+
+#postal-code-container {
+  margin:auto;
+  max-width:520px;
+}
+
+#postal-code-input {
+  float: left;
+  width: 80%;
+  font-size: 17px;
+  height: 35px;
+  overflow: hidden;
+  font-size: 17px;
+  height: 35px;
+}
+
+#postal-code-button {
+  float: left;
+  width: 19%;
+  font-size: 15px;
+  cursor: pointer;
+  height: 35px !important;
+  border-radius: .25rem;
+  border: 0px;
+  margin-left: 1%;
+}

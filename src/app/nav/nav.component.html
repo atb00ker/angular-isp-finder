@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-md nav-color navbar-dark">
+    <a class="navbar-brand" [routerLink]=[home_path]>ISP Finder</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]=[home_path]>Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]=[about_path]>About</a>
+            </li>
+            <li [title]="third_cookies_enabled ? 'Login' : 'Please Enable Third-Party Cookies'" class="nav-item">
+                <a (click)="loginBegin()" [ngClass]="{'disabled': !third_cookies_enabled, 'nav-link': true}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<iframe src="https://mindmup.github.io/3rdpartycookiecheck/start.html" style="display:none"></iframe>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+
+<script>
+
+
+    var receiveMessage = function (evt) {
+        if (evt.data === 'MM:3PCunsupported') {
+            console.log('not supported');
+        } else if (evt.data === 'MM:3PCsupported') {
+            console.log('supported');
+        }
+    };
+    window.addEventListener("message", receiveMessage, false);
+
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDUQVPT--hU0-b51EBL3yJyzuR-Wza-JHM",
+        authDomain: "freebasics-firebase.firebaseapp.com",
+        databaseURL: "https://freebasics-firebase.firebaseio.com",
+        projectId: "freebasics-firebase",
+        storageBucket: "freebasics-firebase.appspot.com",
+        messagingSenderId: "774271036912",
+        appId: "1:774271036912:web:e440f9551e521f51a88135",
+        measurementId: "G-DY2RGQY53S"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    function loginBegin() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            var token = result.credential.accessToken;
+            var user = result.user;
+            console.log(user, token);
+        }).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+        });
+        firebase.auth().getRedirectResult().then(function (result) {
+            if (result.credential) {
+                var token = result.credential.accessToken;
+            }
+            var user = result.user;
+            console.log(user, token);
+        }).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+        });
+    }
+</script>
