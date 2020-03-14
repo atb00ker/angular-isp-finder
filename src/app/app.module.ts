@@ -3,6 +3,9 @@ import { Component, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// Firebase
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
 // Components
 import { NavComponent } from './nav/nav.component';
 import { RoutedComponents } from './app-routing.module';
@@ -22,7 +25,7 @@ export class AppComponent {
   declarations: [
     AppComponent,
     NavComponent,
-    RoutedComponents,
+    RoutedComponents
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ export class AppComponent {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent]

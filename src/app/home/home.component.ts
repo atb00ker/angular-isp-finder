@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { IdetailsISP } from '../app.interface';
 import { Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,22 +12,23 @@ import { Validators } from '@angular/forms';
   providers: [ApiService]
 })
 export class HomeComponent {
+  constructor(private api: ApiService, public authenticate: AuthService) { }
+  isplist_data: IdetailsISP[] = [];
+  contact_author = "ajay39in+isplist@gmail.com";
+
+  // Page Form
   pincode = new FormControl(null, [
     Validators.required,
     Validators.minLength(5),
     Validators.maxLength(6),
   ]);
-  contact_author = "ajay39in+isplist@gmail.com";
-  isplist_data: IdetailsISP[] = [];
 
-  constructor(private api: ApiService) { }
-
+  // Search
   postalSearchClick() {
-    console.log(this.pincode.value)
-    this.getAreaISP(this.pincode.value);
+    this.getAreaISPRequest(this.pincode.value);
   }
 
-  getAreaISP = (pincode) => {
+  getAreaISPRequest = (pincode) => {
     this.api.getAreaISP(pincode).subscribe(data => this.isplist_data = data)
   }
 }
