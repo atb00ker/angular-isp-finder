@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ApiService } from '../api.service';
 import { Validators } from '@angular/forms';
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-add-provider',
@@ -12,8 +13,11 @@ import { Validators } from '@angular/forms';
 })
 export class AddProviderComponent {
   constructor(private api: ApiService, public authenticate: AuthService) { }
+  public contact_author: string = environment.contact_author;
+  public display_add_status: string = 'normal';
+  public disable_add_btn: boolean = false;
 
-  addProviderForm = new FormGroup({
+  add_provider_form = new FormGroup({
     pincode: new FormControl(null, [
       Validators.required,
       Validators.minLength(5),
@@ -30,22 +34,22 @@ export class AddProviderComponent {
 
   // Submit
   addProviderSubmit() {
-    this.addProviderRequest(this.addProviderForm.value['name'],
-      this.addProviderForm.value['contact'],
-      this.addProviderForm.value['website'],
-      this.addProviderForm.value['pincode'],
+    this.display_add_status = 'progress';
+    this.disable_add_btn = true;
+    this.addProviderRequest(this.add_provider_form.value['name'],
+      this.add_provider_form.value['contact'],
+      this.add_provider_form.value['website'],
+      this.add_provider_form.value['pincode'],
       this.authenticate.user_uid);
   }
 
   addProviderRequest = (name, contact, website, pincode, uid) => {
     this.api.addProvider(name, contact, website, pincode, uid).subscribe(
-      (result) => {
-        console.log(result);
+      () => {
+        this.display_add_status = 'success';
+        this.add_provider_form.reset();
       },
-      (error) => {
-        console.log("error");
-        console.log(error);
-      },
-    );
+      () => { this.display_add_status = 'error'; },
+    ).add(() => { this.disable_add_btn = false; });
   }
 }

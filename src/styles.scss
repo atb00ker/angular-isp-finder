@@ -1,10 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    margin: 0;
-    overflow-x: hidden;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+label {
+  margin: 0;
 }
 
 .icon-white {
   fill: white;
+}
+
+.row {
+  margin: auto! important;
+}
+
+/* Display Status Styles */
+
+.display-status {
+    border: 2px #999 solid;
+    border-radius: 4px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.display-status-normal {
+    @extend .display-status;
+    border-color: #999;
+    color: #212529;
+}
+
+.display-status-error {
+    @extend .display-status;
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.display-status-success {
+    @extend .display-status;
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.display-status-progress {
+    @extend .display-status;
+    border-color: #17a2b8;
+    color: #17a2b8;
 }

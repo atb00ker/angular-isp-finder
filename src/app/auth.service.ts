@@ -36,15 +36,15 @@ export class AuthService {
   }
 
   getUserLoggedIn() {
-    if (localStorage.getItem('afb_isp_uid'))
+    if (localStorage.getItem('afb_isp_uid')) {
       this.user_uid = JSON.parse(localStorage.getItem('afb_isp_uid'));
-    this.user_email = JSON.parse(localStorage.getItem('afb_isp_email'));
+      this.user_email = JSON.parse(localStorage.getItem('afb_isp_email'));
+    }
   }
 
   logoutBegin() {
-    this.fireauth.signOut();
     localStorage.removeItem('afb_isp_uid');
     localStorage.removeItem('afb_isp_email');
-    location.reload();
+    this.fireauth.signOut();
   }
 }

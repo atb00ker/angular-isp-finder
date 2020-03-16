@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "freebasics-firebase": {
+      "hosting": {
+        "isp-finder": [
+          "freebasics-firebase"
+        ]
+      }
+    }
+  }
+}

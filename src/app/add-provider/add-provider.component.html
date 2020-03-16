@@ -1,77 +1,88 @@
 <!-- Add ISP Form -->
 
-<div class="container mt-4" [formGroup]="addProviderForm" (ngSubmit)="addProviderSubmit()">
+<div class="container mt-4" [formGroup]="add_provider_form" (ngSubmit)="addProviderSubmit()">
     <div class="row">
-        <div class="col-12 display-status">
+        <div *ngIf="display_add_status == 'normal'" class="display-status-normal col-12">
             Please fill the form below to add a new ISP in your area.
         </div>
+        <div *ngIf="display_add_status == 'error'" class="display-status-error col-12">
+            Error: Could not add the details to database. if the problem presists,
+            please contact me at <a href="mailto:{{contact_author}}">{{ contact_author }}</a>.
+        </div>
+        <div *ngIf="display_add_status == 'success'" class="display-status-success col-12">
+            Success: Internet Service Provider has been added to the database.
+        </div>
+        <div *ngIf="display_add_status == 'progress'" class="display-status-progress col-12">
+            Progress: Sending details to the database...
+        </div>
     </div>
-    <form class="container mt-4" [formGroup]="addProviderForm" (ngSubmit)="addProviderSubmit()">
-        <!-- Pincode -->
-        <div class="row">
-            <div [ngClass]="{
-            'd-none': addProviderForm.get('pincode').valid || addProviderForm.get('pincode').untouched,
+</div>
+<form class="container mt-4" [formGroup]="add_provider_form" (ngSubmit)="addProviderSubmit()">
+    <!-- Pincode -->
+    <div class="row">
+        <div [ngClass]="{
+            'd-none': add_provider_form.get('pincode').valid || add_provider_form.get('pincode').untouched,
             'text-danger col-12': true}">
-                *Error: A valid pincode is 5 or 6 digits long.
-            </div>
-            <span class="col-sm-12 col-md-6 col-lg-3">
-                <label for="postal-code-input">
-                    Postalcode:
-                </label>
-            </span>
-            <input aria-label="Postal code" id="postal-code-input" placeholder="400001" type="text"
-                formControlName="pincode" data-lpignore="true" name="postal-code-input" [ngClass]="{
-            'text-danger error-input': addProviderForm.get('pincode').invalid && addProviderForm.get('pincode').touched,
-            'add-input-common col-sm-12 col-md-6 col-lg-9': true}">
+            *Error: A valid pincode is 5 or 6 digits long.
         </div>
+        <span class="col-sm-12 col-md-6 col-lg-3">
+            <label for="postal-code-input">
+                Postal Code:
+            </label>
+        </span>
+        <input aria-label="Postal code" id="postal-code-input" placeholder="400001" type="text"
+            formControlName="pincode" data-lpignore="true" name="postal-code-input" [ngClass]="{
+            'text-danger error-input': add_provider_form.get('pincode').invalid && add_provider_form.get('pincode').touched,
+            'add-input-common col-sm-12 col-md-6 col-lg-9': true}">
+    </div>
 
-        <!-- Name -->
-        <div class="row">
-            <div [ngClass]="{
-            'd-none': addProviderForm.get('name').valid || addProviderForm.get('name').untouched,
+    <!-- Name -->
+    <div class="row">
+        <div [ngClass]="{
+            'd-none': add_provider_form.get('name').valid || add_provider_form.get('name').untouched,
             'text-danger col-12': true}">
-                *Error: A value is required.
-            </div>
-            <span class="col-sm-12 col-md-6 col-lg-3">
-                <label for="isp-name-input"> Company Name: </label>
-            </span>
-            <input data-lpignore="true" name="isp-name-input" aria-label="Internet Provider Name" id="isp-name-input"
-                placeholder="Vodafone" type="text" formControlName="name" [ngClass]="{
-            'text-danger error-input': addProviderForm.get('name').invalid && addProviderForm.get('name').touched,
+            *Error: A value is required.
+        </div>
+        <span class="col-sm-12 col-md-6 col-lg-3">
+            <label for="isp-name-input"> Company Name: </label>
+        </span>
+        <input data-lpignore="true" name="isp-name-input" aria-label="Internet Provider Name" id="isp-name-input"
+            placeholder="Vodafone" type="text" formControlName="name" [ngClass]="{
+            'text-danger error-input': add_provider_form.get('name').invalid && add_provider_form.get('name').touched,
             'add-input-common col-sm-12 col-md-6 col-lg-9': true}">
-        </div>
+    </div>
 
-        <!-- Contact -->
-        <div class="row">
-            <span class="col-sm-12 col-md-6 col-lg-3">
-                <label for="isp-name-input"> Contact Info: </label>
-            </span>
-            <input data-lpignore="true" class="add-input-common col-sm-12 col-md-6 col-lg-9" name="isp-contact-input"
-                aria-label="Phone / Email" id="isp-contact-input" placeholder="+91-9700501020" type="text"
-                formControlName="contact">
-        </div>
+    <!-- Contact -->
+    <div class="row">
+        <span class="col-sm-12 col-md-6 col-lg-3">
+            <label for="isp-name-input"> Contact Info: </label>
+        </span>
+        <input data-lpignore="true" class="add-input-common col-sm-12 col-md-6 col-lg-9" name="isp-contact-input"
+            aria-label="Phone / Email" id="isp-contact-input" placeholder="+91-9700501020" type="text"
+            formControlName="contact">
+    </div>
 
-        <!-- Website -->
-        <div class="row">
-            <div [ngClass]="{
-            'd-none': addProviderForm.get('website').valid || addProviderForm.get('website').untouched,
+    <!-- Website -->
+    <div class="row">
+        <div [ngClass]="{
+            'd-none': add_provider_form.get('website').valid || add_provider_form.get('website').untouched,
             'text-danger col-12': true}">
-                *This doesn't look like a valid url.
-            </div>
-            <span class="col-sm-12 col-md-6 col-lg-3">
-                <label for="isp-name-input"> Company website: </label>
-            </span>
-            <input data-lpignore="true" name="isp-website-input" aria-label="Website" id="isp-website-input"
-                placeholder="http://www.example.com" type="text" formControlName="website" [ngClass]="{
-            'text-danger error-input': addProviderForm.get('website').invalid && addProviderForm.get('website').touched,
+            *This doesn't look like a valid url.
+        </div>
+        <span class="col-sm-12 col-md-6 col-lg-3">
+            <label for="isp-name-input"> Company website: </label>
+        </span>
+        <input data-lpignore="true" name="isp-website-input" aria-label="Website" id="isp-website-input"
+            placeholder="http://www.example.com" type="text" formControlName="website" [ngClass]="{
+            'text-danger error-input': add_provider_form.get('website').invalid && add_provider_form.get('website').touched,
             'add-input-common col-sm-12 col-md-6 col-lg-9': true}">
-        </div>
+    </div>
 
-        <!-- Submit -->
-        <div class="row">
-            <div class="mt-2 col-sm-12 col-md-10 col-lg-9">
-                <button title="Add new ISP" [disabled]="addProviderForm.invalid" type="submit" id="add-provider-button"
-                    class="btn btn-primary"> Add </button>
-            </div>
+    <!-- Submit -->
+    <div class="row">
+        <div class="mt-2 col-sm-12 col-md-10 col-lg-9">
+            <button title="Add new ISP" [disabled]="add_provider_form.invalid || disable_add_btn" type="submit"
+                id="add-provider-button" class="btn btn-primary"> Add </button>
         </div>
-    </form>
+    </div>
+</form>

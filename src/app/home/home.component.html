@@ -7,8 +7,8 @@
             <input name="postal-code-input" aria-label="Postal code" id="postal-code-input"
                 placeholder="Valid 5/6 digit code: 400001" type="text" [formControl]="pincode"
                 [ngClass]="{'text-danger error-input': pincode.invalid && pincode.touched}">
-            <button title="Enter valid pincode to search for ISPs" [disabled]="pincode.invalid" type="submit"
-                id="postal-code-button" class="btn btn-primary">
+            <button title="Enter valid pincode to search for ISPs" [disabled]="pincode.invalid || disable_search_btn"
+                type="submit" id="postal-code-button" class="btn btn-primary">
                 <svg class="icon-white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                     <path
                         d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
@@ -16,9 +16,9 @@
             </button>
         </form>
     </div>
-    <div class="row mt-4">
-        <div class="col-12">
-            <table *ngIf='isplist_data.length > 0' class="table table-hover">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <table *ngIf="display_search_status === 'success'" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -45,10 +45,17 @@
                     </tr>
                 </tbody>
             </table>
+            <div *ngIf="display_search_status === 'error'" class="display-status-error">
+                The database doesn't have any information for your area. <br>
+                If you know any providers in this area, please login to add them to the database.
+            </div>
+            <div *ngIf="display_search_status === 'progress'" class="display-status-progress">
+                Progress: Getting information from database...
+            </div>
         </div>
     </div>
-    <div class="row justify-content-center mt-3">
-        <div class="col-10 text-secondary">
+    <div class="row justify-content-center">
+        <div class="col-10 text-secondary mt-4">
             Local Internet Service Providers are hard to find but give promising services, this is community project to
             have a database of all the ISPs by postal code, if you want to report a wrong ISP added in your area,
             contact me at <a href="mailto:{{contact_author}}">{{ contact_author }}</a>.

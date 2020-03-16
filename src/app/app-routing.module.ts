@@ -12,12 +12,14 @@ export class AppRoutes {
   public static addprovider = 'addprovider';
 }
 
-const redirectUnauthorizedToHome = () => redirectUnauthorizedTo([AppRoutes.home]);
+// const redirectUnauthorizedToHome = () => redirectUnauthorizedTo([AppRoutes.home]);
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: AppRoutes.home, component: HomeComponent },
   { path: AppRoutes.about, component: AboutComponent },
-  { path: AppRoutes.addprovider, component: AddProviderComponent, ...canActivate(redirectUnauthorizedToHome) },
+  // Form's onchange focus gets lots because of canActivate
+  // ...canActivate(redirectUnauthorizedToHome)
+  { path: AppRoutes.addprovider, component: AddProviderComponent },
   { path: '**', component: HomeComponent },
 ];
 
