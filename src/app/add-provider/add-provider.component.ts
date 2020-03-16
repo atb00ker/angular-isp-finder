@@ -4,6 +4,9 @@ import { AuthService } from '../auth.service';
 import { ApiService } from '../api.service';
 import { Validators } from '@angular/forms';
 import { environment } from '../../environments/environment'
+// Angular Memory Leak Fix
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-add-provider',
@@ -16,6 +19,8 @@ export class AddProviderComponent {
   public contact_author: string = environment.contact_author;
   public display_add_status: string = 'normal';
   public disable_add_btn: boolean = false;
+  // Angular Memory Leak Fix
+  private ngUnsubscribe = new Subject();
 
   add_provider_form = new FormGroup({
     pincode: new FormControl(null, [
@@ -44,12 +49,20 @@ export class AddProviderComponent {
   }
 
   addProviderRequest = (name, contact, website, pincode, uid) => {
-    this.api.addProvider(name, contact, website, pincode, uid).subscribe(
-      () => {
-        this.display_add_status = 'success';
-        this.add_provider_form.reset();
-      },
-      () => { this.display_add_status = 'error'; },
-    ).add(() => { this.disable_add_btn = false; });
+    this.api.addProvider(name, contact, website, pincode, uid)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        () => {
+          this.display_add_status = 'success';
+          this.add_provider_form.reset();
+        },
+        () => { this.display_add_status = 'error'; })
+      .add(() => { this.disable_add_btn = false; });
+  }
+
+  ngOnDestroy() {
+    // Angular Memory Leak Fix
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
