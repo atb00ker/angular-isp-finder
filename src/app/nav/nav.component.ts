@@ -24,7 +24,6 @@ export class NavComponent implements OnInit {
 
   @HostListener('window:resize')
   enableBootstrapCollapse() {
-    console.log(window.screen.width);
     if (window.screen.width > 768)
       this.collapseEnabled = "NavBar"
     else

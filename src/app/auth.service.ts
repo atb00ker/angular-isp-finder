@@ -20,20 +20,28 @@ export class AuthService {
   // Firebase Authentication
   user_uid: string = null;
   user_email: string = null;
-  loginBegin() {
+  loginBegin(provider) {
     if (this.third_cookies_enabled == false)
       alert('Please enable third-party cookies to login!');
     else {
-      this.fireauth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
+      let providerObject = this.getProviderObject(provider);
+      this.fireauth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
         this.user_uid = result.user.uid;
         this.user_email = result.user.email;
         localStorage.setItem('afb_isp_uid', JSON.stringify(this.user_uid));
         localStorage.setItem('afb_isp_email', JSON.stringify(this.user_email));
+        location.reload();
       }).catch(error => {
         console.log(error.code);
       });
     }
   }
+
+  getProviderObject(provider) {
+    if (provider == "Google")
+      return new auth.GoogleAuthProvider()
+  }
+
 
   getUserLoggedIn() {
     if (localStorage.getItem('afb_isp_uid')) {
@@ -45,6 +53,6 @@ export class AuthService {
   logoutBegin() {
     localStorage.removeItem('afb_isp_uid');
     localStorage.removeItem('afb_isp_email');
-    this.fireauth.signOut();
+    location.reload();
   }
 }

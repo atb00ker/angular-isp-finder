@@ -1,13 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 // Firebase
-import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
-// Components
+import { AngularFireAuthModule } from '@angular/fire/auth';
+// ISP Finder
+import { AppRoutingModule } from './app-routing.module';
+import { environment } from '../environments/environment';
 import { NavComponent } from './nav/nav.component';
+import { AuthService } from './auth.service';
 import { RoutedComponents } from './app-routing.module';
 
 @Component({
@@ -34,8 +36,9 @@ export class AppComponent {
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

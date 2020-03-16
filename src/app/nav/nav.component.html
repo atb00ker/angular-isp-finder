@@ -25,13 +25,13 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li *ngIf="!authenticate.third_cookies_enabled && !authenticate.user_uid"
-                (click)="authenticate.loginBegin()" data-toggle="collapse" data-target="#collapsibleNavbar"
+                (click)="authenticate.loginBegin('Google')" data-toggle="collapse" data-target="#collapsibleNavbar"
                 title="Please Enable Third-Party Cookies" class="nav-item">
                 <a class="disabled nav-link">Login</a>
             </li>
             <li *ngIf="authenticate.third_cookies_enabled && !authenticate.user_uid" class="nav-item">
                 <a class="nav-link" data-toggle="collapse" data-target="#collapsibleNavbar"
-                    (click)="authenticate.loginBegin()" href="#">Login</a>
+                    (click)="authenticate.loginBegin('Google')" href="#">Login</a>
             </li>
             <li *ngIf="authenticate.user_uid" class="nav-item d-none d-lg-block">
                 <a class="nav-link">Welcome, {{ authenticate.user_email }}</a>

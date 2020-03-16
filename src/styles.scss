@@ -4,20 +4,21 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
-
-label {
-  margin: 0;
-}
+label { margin: 0; }
+.row { margin: auto! important; }
 
 .icon-white {
+  // Make an icon white
   fill: white;
 }
 
-.row {
-  margin: auto! important;
+.error-input {
+  // Highlight errored form input box.
+  border: 2px #d51311 solid;
+  border-radius: 4px;
 }
 
-/* Display Status Styles */
+/* Display Status Section Styles */
 
 .display-status {
     border: 2px #999 solid;
