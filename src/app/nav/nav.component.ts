@@ -11,10 +11,10 @@ export class NavComponent implements OnInit {
   constructor(public authenticate: AuthService) { }
 
   // Path
-  public home_path: string = '/' + AppRoutes.home;
-  public about_path: string = '/' + AppRoutes.about;
-  public addprovider_path: string = '/' + AppRoutes.addprovider;
-  public collapseEnabled: string = "NavBar"
+  public HOME_PATH: string = '/' + AppRoutes.home;
+  public ABOUT_PATH: string = '/' + AppRoutes.about;
+  public ADD_PROVIDER_PATH: string = '/' + AppRoutes.addprovider;
+  public collapseEnabled = 'NavBar';
 
   ngOnInit() {
     this.authenticate.getUserLoggedIn();
@@ -24,9 +24,10 @@ export class NavComponent implements OnInit {
 
   @HostListener('window:resize')
   enableBootstrapCollapse() {
-    if (window.screen.width > 768)
-      this.collapseEnabled = "NavBar"
-    else
-      this.collapseEnabled = "collapsibleNavbar"
+    if (window.screen.width > 768) {
+      this.collapseEnabled = 'NavBar';
+    } else {
+      this.collapseEnabled = 'collapsibleNavbar';
+    }
   }
 }

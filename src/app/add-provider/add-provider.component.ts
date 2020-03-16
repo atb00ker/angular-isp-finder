@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ApiService } from '../api.service';
 import { Validators } from '@angular/forms';
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
 // Angular Memory Leak Fix
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -14,19 +14,19 @@ import { Subject } from 'rxjs';
   styleUrls: ['./add-provider.component.scss'],
   providers: [ApiService]
 })
-export class AddProviderComponent {
+export class AddProviderComponent implements OnDestroy {
   constructor(private api: ApiService, public authenticate: AuthService) { }
-  public contact_author: string = environment.contact_author;
-  public display_add_status: string = 'normal';
-  public disable_add_btn: boolean = false;
+  public contactAuthor: string = environment.contactAuthor;
+  public displayAddStatus = 'normal';
+  public disableAddBtn = false;
   // Angular Memory Leak Fix
   private ngUnsubscribe = new Subject();
 
-  add_provider_form = new FormGroup({
+  addProviderForm = new FormGroup({
     pincode: new FormControl(null, [
       Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(6),
+      Validators.min(0),
+      Validators.max(9999999999)
     ]),
     name: new FormControl(null, [
       Validators.required,
@@ -39,13 +39,13 @@ export class AddProviderComponent {
 
   // Submit
   addProviderSubmit() {
-    this.display_add_status = 'progress';
-    this.disable_add_btn = true;
-    this.addProviderRequest(this.add_provider_form.value['name'],
-      this.add_provider_form.value['contact'],
-      this.add_provider_form.value['website'],
-      this.add_provider_form.value['pincode'],
-      this.authenticate.user_uid);
+    this.displayAddStatus = 'progress';
+    this.disableAddBtn = true;
+    this.addProviderRequest(this.addProviderForm.value.name,
+      this.addProviderForm.value.contact,
+      this.addProviderForm.value.website,
+      this.addProviderForm.value.pincode,
+      this.authenticate.uidAuthUser);
   }
 
   addProviderRequest = (name, contact, website, pincode, uid) => {
@@ -53,11 +53,11 @@ export class AddProviderComponent {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         () => {
-          this.display_add_status = 'success';
-          this.add_provider_form.reset();
+          this.displayAddStatus = 'success';
+          this.addProviderForm.reset();
         },
-        () => { this.display_add_status = 'error'; })
-      .add(() => { this.disable_add_btn = false; });
+        () => { this.displayAddStatus = 'error'; })
+      .add(() => { this.disableAddBtn = false; });
   }
 
   ngOnDestroy() {

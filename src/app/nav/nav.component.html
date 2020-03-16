@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md nav-color navbar-dark">
-    <a class="navbar-brand" [routerLink]=[home_path]>ISP Finder</a>
+    <a class="navbar-brand" [routerLink]=[HOME_PATH]>ISP Finder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,36 +7,36 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" data-target="#collapsibleNavbar"
-                    [routerLink]=[home_path]>Home</a>
+                    [routerLink]=[HOME_PATH]>Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" data-target="#collapsibleNavbar"
-                    [routerLink]=[about_path]>About</a>
+                    [routerLink]=[ABOUT_PATH]>About</a>
             </li>
-            <li *ngIf="authenticate.user_uid" class="d-none d-md-flex nav-item">
-                <a [routerLink]=[addprovider_path]>
+            <li *ngIf="authenticate.uidAuthUser" class="d-none d-md-flex nav-item">
+                <a [routerLink]=[ADD_PROVIDER_PATH]>
                     <button type="button" class="btn btn-primary"> Add Provider </button>
                 </a>
             </li>
-            <li *ngIf="authenticate.user_uid" class="d-block d-md-none nav-item" data-toggle="collapse"
+            <li *ngIf="authenticate.uidAuthUser" class="d-block d-md-none nav-item" data-toggle="collapse"
                 data-target="#collapsibleNavbar">
-                <a class="nav-link" [routerLink]=[addprovider_path]>Add Provider</a>
+                <a class="nav-link" [routerLink]=[ADD_PROVIDER_PATH]>Add Provider</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li *ngIf="!authenticate.third_cookies_enabled && !authenticate.user_uid"
+            <li *ngIf="!authenticate.thirdCookiesEnabled && !authenticate.uidAuthUser"
                 (click)="authenticate.loginBegin('Google')" data-toggle="collapse" data-target="#collapsibleNavbar"
                 title="Please Enable Third-Party Cookies" class="nav-item">
                 <a class="disabled nav-link">Login</a>
             </li>
-            <li *ngIf="authenticate.third_cookies_enabled && !authenticate.user_uid" class="nav-item">
+            <li *ngIf="authenticate.thirdCookiesEnabled && !authenticate.uidAuthUser" class="nav-item">
                 <a class="nav-link" data-toggle="collapse" data-target="#collapsibleNavbar"
                     (click)="authenticate.loginBegin('Google')" href="#">Login</a>
             </li>
-            <li *ngIf="authenticate.user_uid" class="nav-item d-none d-lg-block">
-                <a class="nav-link">Welcome, {{ authenticate.user_email }}</a>
+            <li *ngIf="authenticate.uidAuthUser" class="nav-item d-none d-lg-block">
+                <a class="nav-link">Welcome, {{ authenticate.emailAuthUser }}</a>
             </li>
-            <li *ngIf="authenticate.user_uid" class="nav-item">
+            <li *ngIf="authenticate.uidAuthUser" class="nav-item">
                 <a class="nav-link" (click)="authenticate.logoutBegin()" href="#">Logout</a>
             </li>
         </ul>

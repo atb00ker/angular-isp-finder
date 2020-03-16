@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: '**', component: HomeComponent },
 ];
 
-export const RoutedComponents = [HomeComponent, AboutComponent, AddProviderComponent]
+export const RoutedComponents = [HomeComponent, AboutComponent, AddProviderComponent];
 
 
 @NgModule({

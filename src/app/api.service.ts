@@ -8,12 +8,12 @@ import { IdetailsISP } from './app.interface';
 @Injectable()
 export class ApiService {
 
-  private databasebaseUrl = 'https://freebasics-firebase.firebaseio.com/'
-  private setBaseUrl = 'https://us-central1-freebasics-firebase.cloudfunctions.net/addProvider'
-  // private setBaseUrl = 'http://localhost:5001/freebasics-firebase/us-central1/addProvider'
-  private jsonPath = './assets/data/'
+  private databasebaseUrl = 'https://freebasics-firebase.firebaseio.com/';
+  private setBaseUrl = 'https://us-central1-freebasics-firebase.cloudfunctions.net/addProvider';
+  // private setBaseUrl = 'http://localhost:5001/freebasics-firebase/us-central1/addProvider';
+  private jsonPath = './assets/data/';
 
-  private jsonHttpheaders = new HttpHeaders({ 'Content-type': 'application/json' })
+  private jsonHttpheaders = new HttpHeaders({ 'Content-type': 'application/json' });
   constructor(private http: HttpClient, public sanitizer: DomSanitizer) { }
 
   getAllISP(): Observable<IdetailsISP[]> {
@@ -21,28 +21,30 @@ export class ApiService {
     return this.http.get<IdetailsISP[]>(this.databasebaseUrl + 'isplist.json', { headers: this.jsonHttpheaders })
       .pipe(catchError(error => {
         console.log(error);
-        let backup_data = this.http.get<IdetailsISP[]>(this.jsonPath + "isplist.json")
-          .pipe(map((data) => { return this.convertObjectToList(data) }));
-        return backup_data;
+        const backupData = this.http.get<IdetailsISP[]>(this.jsonPath + 'isplist.json')
+          .pipe(map((data) => this.convertObjectToList(data)));
+        return backupData;
       }));
   }
 
   getAreaISP(pincode): Observable<IdetailsISP[]> {
     /* Returns the list of all ISPs for the pincode. */
-    let path = 'isplist/' + pincode + '.json';
+    const path = 'isplist/' + pincode + '.json';
     return this.http.get<IdetailsISP[]>(this.databasebaseUrl + path, { headers: this.jsonHttpheaders })
-      .pipe(map(data => { return this.convertObjectToList(data) }),
+      .pipe(map(data => this.convertObjectToList(data)),
         catchError(error => {
           console.error(error);
-          let backup_data: IdetailsISP[] = [];
-          return this.getAllISP()
-            .pipe(map(data => {
-              if (data['isplist'].hasOwnProperty(pincode))
-                backup_data = data['isplist'][pincode];
-              return backup_data;
-            },
-              internal_error => console.log(internal_error)
-            ));
+          let backupData: IdetailsISP[] = [];
+          return this.getAllISP().pipe(map(data => {
+            /* tslint:disable:no-string-literal */
+            if (data['isplist'].hasOwnProperty(pincode)) {
+              backupData = data['isplist'][pincode];
+            }
+            /* tslint:enable:no-string-literal */
+            return backupData;
+          },
+            internalError => console.log(internalError)
+          ));
         }));
   }
 
@@ -52,10 +54,11 @@ export class ApiService {
     convert it to list. (eg: firebase can not return
     a list as of now.)
     */
-    var final_data = [];
-    for (let uid in data)
-      final_data.push(data[uid]);
-    return final_data;
+    const finalData = [];
+    if (data !== null) {
+      for (const uid of Object.keys(data)) { finalData.push(data[uid]); }
+    }
+    return finalData;
   }
 
   addProvider(name, contact, website, pincode, uid): Observable<string> {
@@ -64,17 +67,17 @@ export class ApiService {
     this function to be send to the backend.
     */
     const body = {
-      "pincode": pincode,
-      "uid": uid,
-      "values": {
-        "contact": contact,
-        "name": name,
-        "website": website
+      pincode,
+      uid,
+      values: {
+        contact,
+        name,
+        website
       }
-    }
+    };
     const httpOptions = {
       headers: new HttpHeaders({
-        'Accept': 'text/plain, */*',
+        Accept: 'text/plain, */*',
         'Content-Type': 'application/json'
       }),
       responseType: 'text' as 'json'

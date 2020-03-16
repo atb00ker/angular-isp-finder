@@ -7,29 +7,34 @@ export class AuthService {
 
   constructor(public fireauth: AngularFireAuth) { }
 
+  thirdCookiesEnabled = true;
+  uidAuthUser: string = null;
+  emailAuthUser: string = null;
+
+
   // Third-Party Cookies
-  third_cookies_enabled: boolean = true;
   checkCookiesEnabled() {
-    var receiveMessage = evt => {
-      if (evt.data === 'MM:3PCunsupported') this.third_cookies_enabled = false;
-      else if (evt.data === 'MM:3PCsupported') this.third_cookies_enabled = true;
+    const receiveMessage = evt => {
+      if (evt.data === 'MM:3PCunsupported') {
+        this.thirdCookiesEnabled = false;
+      } else if (evt.data === 'MM:3PCsupported') {
+        this.thirdCookiesEnabled = true;
+      }
     };
-    window.addEventListener("message", receiveMessage, false);
+    window.addEventListener('message', receiveMessage, false);
   }
 
   // Firebase Authentication
-  user_uid: string = null;
-  user_email: string = null;
   loginBegin(provider) {
-    if (this.third_cookies_enabled == false)
+    if (this.thirdCookiesEnabled === false) {
       alert('Please enable third-party cookies to login!');
-    else {
-      let providerObject = this.getProviderObject(provider);
-      this.fireauth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(result => {
-        this.user_uid = result.user.uid;
-        this.user_email = result.user.email;
-        localStorage.setItem('afb_isp_uid', JSON.stringify(this.user_uid));
-        localStorage.setItem('afb_isp_email', JSON.stringify(this.user_email));
+    } else {
+      const providerObject = this.getProviderObject(provider);
+      this.fireauth.auth.signInWithPopup(providerObject).then(result => {
+        this.uidAuthUser = result.user.uid;
+        this.emailAuthUser = result.user.email;
+        localStorage.setItem('afb_isp_uid', JSON.stringify(this.uidAuthUser));
+        localStorage.setItem('afb_isp_email', JSON.stringify(this.emailAuthUser));
         location.reload();
       }).catch(error => {
         console.log(error.code);
@@ -38,15 +43,14 @@ export class AuthService {
   }
 
   getProviderObject(provider) {
-    if (provider == "Google")
-      return new auth.GoogleAuthProvider()
+    if (provider === 'Google') { return new auth.GoogleAuthProvider(); }
   }
 
 
   getUserLoggedIn() {
     if (localStorage.getItem('afb_isp_uid')) {
-      this.user_uid = JSON.parse(localStorage.getItem('afb_isp_uid'));
-      this.user_email = JSON.parse(localStorage.getItem('afb_isp_email'));
+      this.uidAuthUser = JSON.parse(localStorage.getItem('afb_isp_uid'));
+      this.emailAuthUser = JSON.parse(localStorage.getItem('afb_isp_email'));
     }
   }
 

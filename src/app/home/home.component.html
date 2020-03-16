@@ -4,10 +4,10 @@
             <span>
                 <label for="postal-code-input"> Enter Postal code: </label>
             </span>
-            <input name="postal-code-input" aria-label="Postal code" id="postal-code-input"
-                placeholder="Valid 5/6 digit code: 400001" type="text" [formControl]="pincode"
+            <input name="postal-code-input" aria-label="Postal code" id="postal-code-input" placeholder="400001"
+                type="text" [formControl]="pincode"
                 [ngClass]="{'text-danger error-input': pincode.invalid && pincode.touched}">
-            <button title="Enter valid pincode to search for ISPs" [disabled]="pincode.invalid || disable_search_btn"
+            <button title="Enter valid pincode to search for ISPs" [disabled]="pincode.invalid || disableSearchBtn"
                 type="submit" id="postal-code-button" class="btn btn-primary">
                 <svg class="icon-white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                     <path
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-12 mt-4">
-            <table *ngIf="display_search_status === 'success'" class="table table-hover">
+            <table *ngIf="displaySearchStatus === 'success'" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ispdetail of isplist_data">
+                    <tr *ngFor="let ispdetail of isplistData">
                         <td>{{ ispdetail.name }}</td>
                         <td>{{ ispdetail.contact || '' }}</td>
                         <td *ngIf="!ispdetail.website"></td>
@@ -45,11 +45,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div *ngIf="display_search_status === 'error'" class="display-status-error">
+            <div *ngIf="displaySearchStatus === 'error'" class="display-status-error">
                 The database doesn't have any information for your area. <br>
                 If you know any providers in this area, please login to add them to the database.
             </div>
-            <div *ngIf="display_search_status === 'progress'" class="display-status-progress">
+            <div *ngIf="displaySearchStatus === 'progress'" class="display-status-progress">
                 Progress: Getting information from database...
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="col-10 text-secondary mt-4">
             Local Internet Service Providers are hard to find but give promising services, this is community project to
             have a database of all the ISPs by postal code, if you want to report a wrong ISP added in your area,
-            contact me at <a href="mailto:{{contact_author}}">{{ contact_author }}</a>.
+            contact me at <a href="mailto:{{contactAuthor}}">{{ contactAuthor }}</a>.
         </div>
     </div>
 </div>
