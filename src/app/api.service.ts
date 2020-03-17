@@ -4,28 +4,16 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IdetailsISP } from './app.interface';
-
+import { environment } from '../environments/environment';
 @Injectable()
 export class ApiService {
 
-  private databasebaseUrl = 'https://freebasics-firebase.firebaseio.com/';
-  private setBaseUrl = 'https://us-central1-freebasics-firebase.cloudfunctions.net/addProvider';
-  // private setBaseUrl = 'http://localhost:5001/freebasics-firebase/us-central1/addProvider';
+  private databasebaseUrl = environment.app.databaseUrl;
+  private computeUrl = environment.app.computeUrl;
   private jsonPath = './assets/data/';
 
   private jsonHttpheaders = new HttpHeaders({ 'Content-type': 'application/json' });
   constructor(private http: HttpClient, public sanitizer: DomSanitizer) { }
-
-  getAllISP(): Observable<IdetailsISP[]> {
-    /* Get all the stored ISPs */
-    return this.http.get<IdetailsISP[]>(this.databasebaseUrl + 'isplist.json', { headers: this.jsonHttpheaders })
-      .pipe(catchError(error => {
-        console.log(error);
-        const backupData = this.http.get<IdetailsISP[]>(this.jsonPath + 'isplist.json')
-          .pipe(map((data) => this.convertObjectToList(data)));
-        return backupData;
-      }));
-  }
 
   getAreaISP(pincode): Observable<IdetailsISP[]> {
     /* Returns the list of all ISPs for the pincode. */
@@ -34,17 +22,15 @@ export class ApiService {
       .pipe(map(data => this.convertObjectToList(data)),
         catchError(error => {
           console.error(error);
-          let backupData: IdetailsISP[] = [];
-          return this.getAllISP().pipe(map(data => {
+          return this.http.get(this.jsonPath + 'isplist.json').pipe(map((data) => {
+            let backupData: IdetailsISP[] = [];
             /* tslint:disable:no-string-literal */
             if (data['isplist'].hasOwnProperty(pincode)) {
-              backupData = data['isplist'][pincode];
+              backupData = this.convertObjectToList(data['isplist'][pincode]);
             }
-            /* tslint:enable:no-string-literal */
+            /* tslint:disable:no-string-literal */
             return backupData;
-          },
-            internalError => console.log(internalError)
-          ));
+          }));
         }));
   }
 
@@ -82,6 +68,6 @@ export class ApiService {
       }),
       responseType: 'text' as 'json'
     };
-    return this.http.post<string>(this.setBaseUrl, body, httpOptions);
+    return this.http.post<string>(this.computeUrl, body, httpOptions);
   }
 }

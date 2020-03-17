@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 // ISP Finder
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
@@ -37,8 +39,14 @@ export class AppComponent {
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireAuthGuardModule,
+    AngularFireAnalyticsModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    ScreenTrackingService,
+    UserTrackingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

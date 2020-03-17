@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md nav-color navbar-dark">
     <a class="navbar-brand" [routerLink]=[HOME_PATH]>ISP Finder</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <button aria-label="Collapse Navigation Bar" class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" [attr.id]="collapseEnabled">
@@ -15,7 +16,7 @@
             </li>
             <li *ngIf="authenticate.uidAuthUser" class="d-none d-md-flex nav-item">
                 <a [routerLink]=[ADD_PROVIDER_PATH]>
-                    <button type="button" class="btn btn-primary"> Add Provider </button>
+                    <button aria-label="Add Provider" type="button" class="btn btn-primary"> Add Provider </button>
                 </a>
             </li>
             <li *ngIf="authenticate.uidAuthUser" class="d-block d-md-none nav-item" data-toggle="collapse"

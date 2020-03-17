@@ -16,7 +16,7 @@ import { Subject } from 'rxjs';
 })
 export class AddProviderComponent implements OnDestroy {
   constructor(private api: ApiService, public authenticate: AuthService) { }
-  public contactAuthor: string = environment.contactAuthor;
+  public contactAuthor: string = environment.app.contactAuthor;
   public displayAddStatus = 'normal';
   public disableAddBtn = false;
   // Angular Memory Leak Fix

@@ -1,7 +1,7 @@
-import { firebase, contactAuthor } from './common'
+import { firebase, app } from './common'
 
 export const environment = {
   production: true,
-  firebase: firebase,
-  contactAuthor: contactAuthor
+  firebase,
+  app
 };

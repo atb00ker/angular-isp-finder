@@ -19,7 +19,7 @@ export class HomeComponent implements OnDestroy {
   constructor(private api: ApiService, public authenticate: AuthService) { }
 
   public isplistData: IdetailsISP[] = [];
-  public contactAuthor: string = environment.contactAuthor;
+  public contactAuthor: string = environment.app.contactAuthor;
   public displaySearchStatus = 'none';
   public disableSearchBtn = false;
   // Angular Memory Leak Fix

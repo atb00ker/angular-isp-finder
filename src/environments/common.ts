@@ -1,9 +1,16 @@
 
 export const firebase = {
-    apiKey: 'AIzaSyDUQVPT--hU0-b51EBL3yJyzuR-Wza-JHM',
-    authDomain: 'freebasics-firebase.firebaseapp.com',
-    projectId: 'freebasics-firebase',
-    appId: '1:774271036912:web:e440f9551e521f51a88135',
+    apiKey: 'AIzaSyCojuMrLRDhluWcPANu-k1Qq6Secr49CRM',
+    authDomain: "atb00ker-apps.firebaseapp.com",
+    projectId: 'atb00ker-apps',
+    appId: '1:601332684796:web:700f6b084f0e612350c479',
+    measurementId: 'G-CQMKF9Q0W3',
 };
 
-export const contactAuthor = 'ajay39in+isplist@gmail.com';
+export const app = {
+    contactAuthor: 'ajay39in+isplist@gmail.com',
+    // computeUrl: 'http://localhost:5001/freebasics-firebase/us-central1/addProvider',
+    computeUrl: 'https://asia-northeast1-atb00ker-apps.cloudfunctions.net/addProvider',
+    databaseUrl: 'https://atb00ker-apps.firebaseio.com/',
+}
+
