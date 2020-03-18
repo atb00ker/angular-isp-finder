@@ -12,12 +12,15 @@ export class AppRoutes {
   public static addprovider = 'addprovider';
 }
 
-const redirectUnauthorizedToHome = () => redirectUnauthorizedTo([AppRoutes.home]);
+// TODO: Not working in prod: https://github.com/angular/angularfire/issues/2114
+// const redirectUnauthorizedToHome = () => redirectUnauthorizedTo([AppRoutes.home]);
+// ...canActivate(redirectUnauthorizedToHome())
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: AppRoutes.home, component: HomeComponent },
   { path: AppRoutes.about, component: AboutComponent },
-  { path: AppRoutes.addprovider, component: AddProviderComponent, ...canActivate(redirectUnauthorizedToHome()) },
+  { path: AppRoutes.addprovider, component: AddProviderComponent },
   { path: '**', component: HomeComponent },
 ];
 

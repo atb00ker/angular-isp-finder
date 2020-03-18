@@ -4,7 +4,6 @@ import { ApiService } from '../api.service';
 import { IdetailsISP } from '../app.interface';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { environment } from '../../environments/environment';
 // Angular Memory Leak Fix
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -19,7 +18,6 @@ export class HomeComponent implements OnDestroy {
   constructor(private api: ApiService, public authenticate: AuthService) { }
 
   public isplistData: IdetailsISP[] = [];
-  public contactAuthor: string = environment.app.contactAuthor;
   public displaySearchStatus = 'none';
   public disableSearchBtn = false;
   // Angular Memory Leak Fix

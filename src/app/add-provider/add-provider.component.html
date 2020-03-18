@@ -1,6 +1,6 @@
 <!-- Add ISP Form -->
 
-<div class="container mt-4" [formGroup]="addProviderForm" (ngSubmit)="addProviderSubmit()">
+<div class="container mt-4">
     <div class="row">
         <div *ngIf="displayAddStatus == 'normal'" class="display-status-normal col-12">
             Please fill the form below to add a new ISP in your area.
@@ -86,3 +86,14 @@
         </div>
     </div>
 </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center text-secondary mb-5 mt-5">
+            If a provider operates in multiple regions, say an entire city or all
+            major cities of a country, it wouldn't be practical to add them one by one for each pincode.
+            For such cases, you can drop me a mail at <a href="mailto:{{contactAuthor}}">{{ contactAuthor }}</a>
+            with clearly stated list of postal codes where the provider operates and the
+            other relevant information of the provider for me to add in the database.
+        </div>
+    </div>
+</div>
