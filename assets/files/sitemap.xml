@@ -7,7 +7,12 @@
 
 <url>
   <loc>https://atb00ker.github.io/angular-isp-finder/</loc>
-  <lastmod>2020-03-20T20:30:30+05:30</lastmod>
+  <lastmod>2020-03-21T20:30:30+05:30</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://atb00ker.github.io/angular-isp-finder/about</loc>
+  <lastmod>2020-03-21T20:30:30+05:30</lastmod>
   <priority>1.00</priority>
 </url>
 </urlset>
