@@ -22,7 +22,7 @@ import { RoutedComponents } from './app-routing.module';
   `
 })
 export class AppComponent {
-  title = 'ISP Finder';
+  title = 'ISP Finder | Search Internet Service Provider by pincode in your Area';
 }
 
 @NgModule({

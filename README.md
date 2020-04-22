@@ -21,7 +21,8 @@ databaseUrl   : Url for fetching content from database. (like realtime database)
 
 ## Deploy
 
-```bash
-ng build --prod --base-href https://atb00ker.github.io/angular-isp-finder/
-ngh --dir dist/isp-finder/
-```
+1. Build: `ng build --prod --base-href https://atb00ker.github.io/angular-isp-finder/`
+2. Setup SEO About Page:
+    2.1 Copy `dist/isp-finder/index.html` -> `dist/isp-finder/about.html`
+    2.2 Change Title of the page from `src/about.html`
+3. Deploy: `ngh --dir dist/isp-finder/`

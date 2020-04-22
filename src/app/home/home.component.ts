@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { IdetailsISP } from '../app.interface';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Title } from "@angular/platform-browser";
 // Angular Memory Leak Fix
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -15,7 +16,9 @@ import { Subject } from 'rxjs';
   providers: [ApiService]
 })
 export class HomeComponent implements OnDestroy {
-  constructor(private api: ApiService, public authenticate: AuthService) { }
+  constructor(private titleService: Title, private api: ApiService, public authenticate: AuthService) {
+    this.titleService.setTitle("ISP Finder | Search Internet Service Provider by pincode in your Area");
+  }
 
   public isplistData: IdetailsISP[] = [];
   public displaySearchStatus = 'none';

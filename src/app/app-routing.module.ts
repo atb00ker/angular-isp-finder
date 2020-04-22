@@ -21,6 +21,8 @@ const routes: Routes = [
   { path: AppRoutes.home, component: HomeComponent },
   { path: AppRoutes.about, component: AboutComponent },
   { path: AppRoutes.addprovider, component: AddProviderComponent },
+  // For SEO
+  { path: 'about.html', component: AboutComponent },
   { path: '**', component: HomeComponent },
 ];
 

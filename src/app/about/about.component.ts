@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-about',
@@ -8,4 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class AboutComponent {
   public contactAuthor: string = environment.app.contactAuthor;
+  constructor(private titleService: Title) {
+    this.titleService.setTitle("ISP Finder | About");
+  }
 }

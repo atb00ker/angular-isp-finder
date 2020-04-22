@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { ApiService } from '../api.service';
 import { Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { Title } from "@angular/platform-browser";
 // Angular Memory Leak Fix
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -15,7 +16,9 @@ import { Subject } from 'rxjs';
   providers: [ApiService]
 })
 export class AddProviderComponent implements OnDestroy {
-  constructor(private api: ApiService, public authenticate: AuthService) { }
+  constructor(private titleService: Title, private api: ApiService, public authenticate: AuthService) {
+    this.titleService.setTitle("ISP Finder | Add Internet Service Provider in an Area");
+  }
   public contactAuthor: string = environment.app.contactAuthor;
   public displayAddStatus = 'normal';
   public disableAddBtn = false;
